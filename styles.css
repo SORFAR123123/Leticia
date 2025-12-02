@@ -27,21 +27,9 @@ body {
 }
 
 /* ============================================================================
-   ESTILOS PARA EVENTOS DIARIOS (se mantienen igual)
+   PANTALLA DE INICIO
    ============================================================================ */
 
-.evento-diario-container {
-    background: linear-gradient(135deg, #2d1b4e, #4a2b8c);
-    border-radius: 25px;
-    padding: 30px;
-    border: 4px solid #ff6b9d;
-    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
-    text-align: center;
-}
-
-/* ... (todos los estilos de eventos diarios se mantienen igual) ... */
-
-/* PANTALLA DE INICIO */
 h1 {
     text-align: center;
     font-size: 2.5rem;
@@ -171,6 +159,51 @@ h1 {
 .mazo-info {
     font-size: 0.9rem;
     color: #e0e0e0;
+}
+
+/* PANTALLA PARA ELEGIR MODO */
+.contenedor-modos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.modo-card {
+    background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    border: 3px solid #444444;
+    transition: all 0.3s ease;
+}
+
+.modo-card:hover {
+    transform: translateY(-5px);
+    border-color: #4a90e2;
+}
+
+.modo-icono {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.modo-titulo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #4a90e2;
+    margin-bottom: 15px;
+}
+
+.modo-descripcion {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modo-boton {
+    margin-top: 20px;
 }
 
 /* Pantalla del Quiz */
@@ -397,12 +430,6 @@ h1 {
 }
 
 /* ============================================================================
-   ESTILOS RPG DE NOVIA (se mantienen igual)
-   ============================================================================ */
-
-/* ... (todos los estilos RPG se mantienen igual) ... */
-
-/* ============================================================================
    PANEL DE MISIONES DIARIAS
    ============================================================================ */
 
@@ -415,6 +442,33 @@ h1 {
     box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
 }
 
+.misiones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.mision-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mision-texto {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.mision-progreso {
+    font-size: 0.9rem;
+    color: #ffa500;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .contenedor-tarjetas {
@@ -422,6 +476,10 @@ h1 {
     }
     
     .contenedor-mazos {
+        grid-template-columns: 1fr;
+    }
+    
+    .contenedor-modos {
         grid-template-columns: 1fr;
     }
     
@@ -445,5 +503,17 @@ h1 {
     .mazo-imagen {
         width: 100px;
         height: 100px;
+    }
+    
+    .modo-card {
+        padding: 20px;
+    }
+    
+    .modo-icono {
+        font-size: 3rem;
+    }
+    
+    .modo-titulo {
+        font-size: 1.5rem;
     }
 }
