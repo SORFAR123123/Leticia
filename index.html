@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Mazos + RPG + Eventos Diarios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- PANTALLA DE EVENTO DIARIO -->
+    <div id="pantalla-evento-diario" class="pantalla">
+        <div class="contenedor">
+            <div class="evento-diario-container">
+                <div class="evento-header">
+                    <h1>🎁 Evento Diario</h1>
+                    <p class="evento-fecha" id="fecha-evento">Hoy</p>
+                </div>
+                
+                <div class="evento-content">
+                    <div class="video-container-evento">
+                        <video id="video-evento-presentacion" controls muted loop playsinline class="video-evento">
+                            Tu navegador no soporta el elemento video.
+                        </video>
+                        <div class="video-overlay"></div>
+                        <div class="video-play-indicator">
+                            <div class="play-icon">▶️</div>
+                            <p>Haz clic para reproducir</p>
+                        </div>
+                    </div>
+                    
+                    <div class="evento-info">
+                        <h2 class="evento-nombre" id="nombre-evento">Reto Diario</h2>
+                        <p class="evento-descripcion" id="descripcion-evento">Completa el desafío de hoy</p>
+                        
+                        <div class="evento-progreso">
+                            <div class="progreso-texto">
+                                Progreso: <span id="contador-progreso">0</span>/<span id="objetivo-evento">3</span>
+                            </div>
+                            <div class="barra-progreso-evento">
+                                <div id="barra-progreso-fill" class="barra-progreso-fill-evento" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="evento-recompensa">
+                            <h3>🎯 Recompensa:</h3>
+                            <p id="recompensa-evento">+5 S/. 💰</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="evento-actions">
+                    <button class="boton-principal" onclick="eventosDiarios.aceptarEvento()">
+                        ¡Aceptar Reto! 🚀
+                    </button>
+                    <button class="boton-secundario" onclick="eventosDiarios.omitirEvento()">
+                        Omitir por hoy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO RECOMPENSA EVENTO -->
+    <div id="pantalla-video-evento" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1 id="titulo-video-evento">¡Felicidades! 🎉</h1>
+                <p class="subtitulo-video" id="mensaje-video-evento">Has completado el evento diario</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-recompensa" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">¡Excelente trabajo completando el evento diario! 🎉</p>
+                    <p class="recompensa-dinero" id="recompensa-dinero-evento">+5 S/. 💰</p>
+                </div>
+                
+                <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
+                    Cerrar y Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO FALLO EVENTO -->
+    <div id="pantalla-video-fallo" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1 id="titulo-video-fallo">Sigue Intentando 💪</h1>
+                <p class="subtitulo-video" id="mensaje-video-fallo">Mañana será otro día</p>
+                
+                <div class="video-container">
+                    <video id="video-evento-fallo" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p class="mensaje-video">¡Hoy es un nuevo día para intentarlo! 💪</p>
+                </div>
+                
+                <button class="boton-principal" onclick="eventosDiarios.cerrarVideoFallo()">
+                    Cerrar y Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE INICIO -->
+    <div id="pantalla-inicio" class="pantalla activa">
+        <div class="contenedor">
+            <h1>BIBLIOTECA DE MAZOS</h1>
+            <p class="subtitulo">Selecciona un contenedor principal</p>
+            
+            <!-- PANEL DE MISIONES DIARIAS -->
+            <div class="misiones-diarias-panel">
+                <h3>🎯 Misiones Diarias</h3>
+                <div class="misiones-lista">
+                    <div class="mision-item">
+                        <span class="mision-texto">Completar 1 mazo al 100%</span>
+                        <span class="mision-recompensa">+1 S/. 💰</span>
+                        <div class="mision-progreso">
+                            <span id="mision1-progreso">0/1</span>
+                        </div>
+                    </div>
+                    <div class="mision-item">
+                        <span class="mision-texto">Completar 3 mazos al 100%</span>
+                        <span class="mision-recompensa">+3 S/. 💰</span>
+                        <div class="mision-progreso">
+                            <span id="mision2-progreso">0/3</span>
+                        </div>
+                    </div>
+                    <div class="mision-item">
+                        <span class="mision-texto">Completar 5 mazos al 100%</span>
+                        <span class="mision-recompensa">+5 S/. 💰</span>
+                        <div class="mision-progreso">
+                            <span id="mision3-progreso">0/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="economia-panel">
+                    <span class="saldo-total">Saldo: <span id="saldo-total">0</span> S/.</span>
+                </div>
+            </div>
+            
+            <div class="menu-principal">
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor1')">
+                            <img src="https://pbs.twimg.com/media/G5_wCzcWsAAmHcA?format=png&name=small" alt="Contenedor 1" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">The last summer 1</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor2')">
+                            <img src="https://pbs.twimg.com/media/G6EARd6XIAEYjvU?format=jpg&name=medium" alt="Contenedor 2" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Toono Esuke 2</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor3')">
+                            <img src="https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small" alt="Contenedor 3" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Yamada</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor4')">
+                            <img src="imagenes/contenedor4.jpg" alt="Contenedor 4" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 4</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor5')">
+                            <img src="imagenes/contenedor5.jpg" alt="Contenedor 5" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 5</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor6')">
+                            <img src="imagenes/contenedor6.jpg" alt="Contenedor 6" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 6</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor7')">
+                            <img src="imagenes/contenedor7.jpg" alt="Contenedor 7" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 7</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor8')">
+                            <img src="imagenes/contenedor8.jpg" alt="Contenedor 8" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 8</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor9')">
+                            <img src="imagenes/contenedor9.jpg" alt="Contenedor 9" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 9</div>
+                        </div>
+                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
+                            <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Contenedor 10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN RPG DE NOVIA -->
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">MODOS ESPECIALES</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="iniciarRPGNovia()">
+                            <img src="https://pbs.twimg.com/media/G6EB4BzbMAIovTM?format=jpg&name=4096x4096" alt="RPG de Novia" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">💕 Mi Novia RPG</div>
+                            <div class="lastsummer-info">Sistema de relación +18</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE SUBCONTENEDORES -->
+    <div id="pantalla-subcontenedores" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="titulo-contenedor">Contenedor</div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+            </div>
+            
+            <h2 id="nombre-contenedor">Sub-Contenedores</h2>
+            
+            <div class="contenedor-subcontenedores" id="contenedor-subcontenedores">
+                <!-- Los sub-contenedores se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE MAZOS -->
+    <div id="pantalla-mazos" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="titulo-subcontenedor">Sub-Contenedor</div>
+                <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
+            </div>
+            
+            <h2 id="nombre-subcontenedor">Mazos Disponibles</h2>
+            
+            <div class="contenedor-mazos" id="contenedor-mazos">
+                <!-- Los mazos se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DEL QUIZ -->
+    <div id="pantalla-quiz" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
+                <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
+            </div>
+            
+            <div class="contenido-quiz">
+                <div class="palabra-japones" id="palabra-japones">言葉</div>
+                <div class="lectura" id="lectura"></div>
+                
+                <div class="contenedor-opciones" id="contenedor-opciones">
+                    <!-- Las opciones se generarán dinámicamente -->
+                </div>
+                
+                <div class="resultado" id="resultado"></div>
+                
+                <!-- EL BOTÓN SIGUIENTE SE MUESTRA SOLO PARA RESPUESTAS INCORRECTAS -->
+                <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE VIDEO RECOMPENSA -->
+    <div id="pantalla-video-recompensa" class="pantalla">
+        <div class="contenedor">
+            <div class="contenido-video">
+                <h1 id="titulo-video">¡Felicidades! 🎉</h1>
+                <p class="subtitulo-video">Has completado el mazo al 100%</p>
+                
+                <div class="video-container">
+                    <video id="video-recompensa" controls autoplay class="video-recompensa">
+                        Tu navegador no soporta el elemento video.
+                    </video>
+                </div>
+                
+                <div class="info-video">
+                    <p id="duracion-video" class="duracion-video">Duración: 10s</p>
+                    <p class="mensaje-video">¡Disfruta tu recompensa!</p>
+                    <p class="recompensa-dinero" id="recompensa-mazo">+1 S/. 💰</p>
+                </div>
+                
+                <button class="boton-principal" onclick="cerrarVideoRecompensaMazo()">
+                    Cerrar y Ver Resultados
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE RESULTADOS -->
+    <div id="pantalla-resultados" class="pantalla">
+        <div class="contenedor">
+            <h1>Resultados del Quiz</h1>
+            
+            <div class="resultado-final" id="resultado-final">
+                <!-- Los resultados se mostrarán aquí -->
+            </div>
+            
+            <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
+            <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA RPG DE NOVIA -->
+    <div id="pantalla-rpg-novia" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador">💕 RPG de Novia</div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
+            </div>
+            
+            <div class="rpg-container">
+                <!-- PERFIL DE LA NOVIA -->
+                <div class="perfil-novia">
+                    <img src="imagenes/novia.jpg" alt="Novia" class="imagen-novia">
+                    <div class="info-novia">
+                        <h2 id="nombre-novia">Sakura</h2>
+                        <div class="estadisticas">
+                            <div class="stat">
+                                <span class="stat-label">Nivel:</span>
+                                <span id="nivel-relacion" class="stat-value">1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Afinidad:</span>
+                                <span id="afinidad" class="stat-value">50%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Ánimo:</span>
+                                <span id="estado-animo" class="stat-value">😊</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BARRA DE AFINIDAD -->
+                <div class="barra-progreso-container">
+                    <div class="barra-progreso-label">Afinidad</div>
+                    <div class="barra-progreso">
+                        <div id="barra-afinidad" class="barra-progreso-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+                
+                <!-- ECONOMÍA -->
+                <div class="economia-rpg">
+                    <div class="saldo">
+                        <span class="saldo-label">Dinero:</span>
+                        <span id="saldo-rpg" class="saldo-valor">0 S/.</span>
+                    </div>
+                    <div class="inventario">
+                        <span class="inventario-label">Condones:</span>
+                        <span id="condones-inventario" class="inventario-valor">0</span>
+                    </div>
+                </div>
+                
+                <!-- DIÁLOGO -->
+                <div class="dialogo-container">
+                    <div id="dialogo-novia" class="dialogo-novia">
+                        <!-- Diálogo generado automáticamente -->
+                    </div>
+                </div>
+                
+                <!-- ACCIONES BÁSICAS -->
+                <div class="acciones-basicas">
+                    <button class="boton-accion" onclick="hablarConNovia()">💬 Conversar</button>
+                    <button class="boton-accion" onclick="comprarCondones()">🛒 Comprar Condones (S/.15)</button>
+                </div>
+                
+                <!-- TIENDA DE REGALOS -->
+                <div class="tienda-regalos">
+                    <h3>🎁 Tienda de Regalos</h3>
+                    <div class="regalos-grid">
+                        <button class="boton-regalo" onclick="regalarItem('flores')">
+                            💐 Flores (S/.5)
+                        </button>
+                        <button class="boton-regalo" onclick="regalarItem('chocolates')">
+                            🍫 Chocolates (S/.10)
+                        </button>
+                        <button class="boton-regalo" onclick="regalarItem('joyas')">
+                            💎 Joyas (S/.20)
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- SECCIÓN +18 -->
+                <div id="seccion-adulto" class="seccion-adulto" style="display: none;">
+                    <h3>💖 Momentos Íntimos</h3>
+                    <div class="acciones-adulto">
+                        <button class="boton-adulto" onclick="usarCondon('beso')">
+                            💋 Beso Apasionado (1 condón)
+                        </button>
+                        <button class="boton-adulto" onclick="usarCondon('caricias')">
+                            ✋ Carícias Íntimas (1 condón)
+                        </button>
+                        <button class="boton-adulto" onclick="usarCondon('intimidad1')">
+                            🌙 Primera Noche (1 condón)
+                        </button>
+                        <button class="boton-adulto" onclick="usarCondon('intimidad2')">
+                            🔥 Noche de Pasión (2 condones)
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- MENSAJES DEL SISTEMA -->
+                <div id="mensaje-rpg" class="mensaje-sistema"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
