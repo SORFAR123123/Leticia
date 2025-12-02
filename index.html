@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- PANTALLA DE EVENTO DIARIO (Se mantiene) -->
+    <!-- PANTALLA DE EVENTO DIARIO -->
     <div id="pantalla-evento-diario" class="pantalla">
         <div class="contenedor">
             <div class="evento-diario-container">
@@ -40,11 +40,6 @@
                                 <div id="barra-progreso-fill" class="barra-progreso-fill-evento" style="width: 0%"></div>
                             </div>
                         </div>
-                        
-                        <div class="evento-recompensa">
-                            <h3>🎯 Recompensa:</h3>
-                            <p id="recompensa-evento">+5 S/. 💰</p>
-                        </div>
                     </div>
                 </div>
                 
@@ -75,7 +70,6 @@
                 
                 <div class="info-video">
                     <p class="mensaje-video">¡Excelente trabajo completando el evento diario! 🎉</p>
-                    <p class="recompensa-dinero" id="recompensa-dinero-evento">+5 S/. 💰</p>
                 </div>
                 
                 <button class="boton-principal" onclick="eventosDiarios.cerrarVideoRecompensa()">
@@ -121,28 +115,22 @@
                 <div class="misiones-lista">
                     <div class="mision-item">
                         <span class="mision-texto">Completar 1 mazo al 100%</span>
-                        <span class="mision-recompensa">+1 S/. 💰</span>
                         <div class="mision-progreso">
                             <span id="mision1-progreso">0/1</span>
                         </div>
                     </div>
                     <div class="mision-item">
                         <span class="mision-texto">Completar 3 mazos al 100%</span>
-                        <span class="mision-recompensa">+3 S/. 💰</span>
                         <div class="mision-progreso">
                             <span id="mision2-progreso">0/3</span>
                         </div>
                     </div>
                     <div class="mision-item">
                         <span class="mision-texto">Completar 5 mazos al 100%</span>
-                        <span class="mision-recompensa">+5 S/. 💰</span>
                         <div class="mision-progreso">
                             <span id="mision3-progreso">0/5</span>
                         </div>
                     </div>
-                </div>
-                <div class="economia-panel">
-                    <span class="saldo-total">Saldo: <span id="saldo-total">0</span> S/.</span>
                 </div>
             </div>
             
@@ -190,23 +178,11 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- SECCIÓN RPG (se mantiene) -->
-                <div class="seccion-menu">
-                    <h2 class="titulo-seccion">MODOS ESPECIALES</h2>
-                    <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="iniciarRPGNovia()">
-                            <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop" alt="RPG de Novia" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">💕 Mi Novia RPG</div>
-                            <div class="lastsummer-info">Sistema de relación +18</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- PANTALLA DE MAZOS (ahora para partes de cada semana) -->
+    <!-- PANTALLA DE MAZOS -->
     <div id="pantalla-mazos" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
@@ -222,12 +198,44 @@
         </div>
     </div>
 
-    <!-- PANTALLA DEL QUIZ (se mantiene igual) -->
+    <!-- PANTALLA PARA ELEGIR MODO DE ESTUDIO -->
+    <div id="pantalla-elegir-modo" class="pantalla">
+        <div class="contenedor">
+            <div class="barra-superior">
+                <div class="contador" id="titulo-modo">Elegir Modo de Estudio</div>
+                <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
+            </div>
+            
+            <h2 id="nombre-parte-modo">Modo de Estudio</h2>
+            
+            <div class="contenedor-modos">
+                <div class="modo-card" onclick="iniciarMazo('orden')">
+                    <div class="modo-icono">📚</div>
+                    <h3 class="modo-titulo">Modo Ordenado</h3>
+                    <p class="modo-descripcion">Las preguntas aparecen en el orden original del contenido</p>
+                    <div class="modo-boton">
+                        <button class="boton-principal">Estudiar en Orden</button>
+                    </div>
+                </div>
+                
+                <div class="modo-card" onclick="iniciarMazo('desorden')">
+                    <div class="modo-icono">🎲</div>
+                    <h3 class="modo-titulo">Modo Aleatorio</h3>
+                    <p class="modo-descripcion">Las preguntas aparecen mezcladas para un mayor desafío</p>
+                    <div class="modo-boton">
+                        <button class="boton-principal">Estudiar Aleatorio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DEL QUIZ -->
     <div id="pantalla-quiz" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
                 <div class="contador" id="contador-preguntas">Pregunta: <span id="numero-pregunta">1</span>/<span id="total-preguntas">10</span></div>
-                <button class="boton-home" onclick="volverAMazos()">Volver a Mazos</button>
+                <button class="boton-home" onclick="volverAModos()">Volver a Modos</button>
             </div>
             
             <div class="contenido-quiz">
@@ -245,7 +253,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE VIDEO RECOMPENSA (se mantiene) -->
+    <!-- PANTALLA DE VIDEO RECOMPENSA -->
     <div id="pantalla-video-recompensa" class="pantalla">
         <div class="contenedor">
             <div class="contenido-video">
@@ -261,7 +269,6 @@
                 <div class="info-video">
                     <p id="duracion-video" class="duracion-video">Duración: 10s</p>
                     <p class="mensaje-video">¡Disfruta tu recompensa!</p>
-                    <p class="recompensa-dinero" id="recompensa-mazo">+1 S/. 💰</p>
                 </div>
                 
                 <button class="boton-principal" onclick="cerrarVideoRecompensaMazo()">
@@ -271,7 +278,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE RESULTADOS (se mantiene) -->
+    <!-- PANTALLA DE RESULTADOS -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
             <h1>Resultados del Quiz</h1>
@@ -280,113 +287,8 @@
                 <!-- Los resultados se mostrarán aquí -->
             </div>
             
-            <button class="boton-principal" onclick="volverAMazos()">Volver a Mazos</button>
+            <button class="boton-principal" onclick="volverAModos()">Volver a Modos</button>
             <button class="boton-secundario" onclick="repetirQuiz()">Repetir Quiz</button>
-        </div>
-    </div>
-
-    <!-- PANTALLA RPG DE NOVIA (se mantiene igual) -->
-    <div id="pantalla-rpg-novia" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador">💕 RPG de Novia</div>
-                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
-            </div>
-            
-            <div class="rpg-container">
-                <!-- PERFIL DE LA NOVIA -->
-                <div class="perfil-novia">
-                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop" alt="Novia" class="imagen-novia">
-                    <div class="info-novia">
-                        <h2 id="nombre-novia">Sakura</h2>
-                        <div class="estadisticas">
-                            <div class="stat">
-                                <span class="stat-label">Nivel:</span>
-                                <span id="nivel-relacion" class="stat-value">1</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">Afinidad:</span>
-                                <span id="afinidad" class="stat-value">50%</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">Ánimo:</span>
-                                <span id="estado-animo" class="stat-value">😊</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- BARRA DE AFINIDAD -->
-                <div class="barra-progreso-container">
-                    <div class="barra-progreso-label">Afinidad</div>
-                    <div class="barra-progreso">
-                        <div id="barra-afinidad" class="barra-progreso-fill" style="width: 50%"></div>
-                    </div>
-                </div>
-                
-                <!-- ECONOMÍA -->
-                <div class="economia-rpg">
-                    <div class="saldo">
-                        <span class="saldo-label">Dinero:</span>
-                        <span id="saldo-rpg" class="saldo-valor">0 S/.</span>
-                    </div>
-                    <div class="inventario">
-                        <span class="inventario-label">Condones:</span>
-                        <span id="condones-inventario" class="inventario-valor">0</span>
-                    </div>
-                </div>
-                
-                <!-- DIÁLOGO -->
-                <div class="dialogo-container">
-                    <div id="dialogo-novia" class="dialogo-novia">
-                        <!-- Diálogo generado automáticamente -->
-                    </div>
-                </div>
-                
-                <!-- ACCIONES BÁSICAS -->
-                <div class="acciones-basicas">
-                    <button class="boton-accion" onclick="hablarConNovia()">💬 Conversar</button>
-                    <button class="boton-accion" onclick="comprarCondones()">🛒 Comprar Condones (S/.15)</button>
-                </div>
-                
-                <!-- TIENDA DE REGALOS -->
-                <div class="tienda-regalos">
-                    <h3>🎁 Tienda de Regalos</h3>
-                    <div class="regalos-grid">
-                        <button class="boton-regalo" onclick="regalarItem('flores')">
-                            💐 Flores (S/.5)
-                        </button>
-                        <button class="boton-regalo" onclick="regalarItem('chocolates')">
-                            🍫 Chocolates (S/.10)
-                        </button>
-                        <button class="boton-regalo" onclick="regalarItem('joyas')">
-                            💎 Joyas (S/.20)
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- SECCIÓN +18 -->
-                <div id="seccion-adulto" class="seccion-adulto" style="display: none;">
-                    <h3>💖 Momentos Íntimos</h3>
-                    <div class="acciones-adulto">
-                        <button class="boton-adulto" onclick="usarCondon('beso')">
-                            💋 Beso Apasionado (1 condón)
-                        </button>
-                        <button class="boton-adulto" onclick="usarCondon('caricias')">
-                            ✋ Carícias Íntimas (1 condón)
-                        </button>
-                        <button class="boton-adulto" onclick="usarCondon('intimidad1')">
-                            🌙 Primera Noche (1 condón)
-                        </button>
-                        <button class="boton-adulto" onclick="usarCondon('intimidad2')">
-                            🔥 Noche de Pasión (2 condones)
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- MENSAJES DEL SISTEMA -->
-                <div id="mensaje-rpg" class="mensaje-sistema"></div>
-            </div>
         </div>
     </div>
 
