@@ -5,7 +5,8 @@
 const configImagenes = {
     semanas: {
         'semana14': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop',
-        'semana13': 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=400&fit=crop'
+        'semana13': 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=400&fit=crop',
+        'lectura': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=400&fit=crop'
     }
 };
 
@@ -119,10 +120,289 @@ const misionesDiarias = {
 };
 
 // ============================================================================
-// ESTRUCTURA DE LAS SEMANAS (SE MANTIENE IGUAL)
+// ESTRUCTURA DE LAS SEMANAS (CON LECTURA AÑADIDA)
 // ============================================================================
 
 const estructuraSemanas = {
+    'lectura': {
+        nombre: '📖 Lectura - Política de Respaldo',
+        partes: {
+            'seccion1': {
+                nombre: 'Sección 1 - Introducción y contexto',
+                preguntas: [
+                    {
+                        pregunta: '¿Por qué se considera a la información como uno de los activos más valiosos de una organización?',
+                        opciones: [
+                            'Porque organizaciones dependen de información precisa, íntegra y disponible para operar',
+                            'Porque es fácil de almacenar y gestionar',
+                            'Porque todas las empresas tienen mucha información'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Cuáles son las posibles consecuencias de no contar con una política de respaldo y recuperación? (Selecciona la opción incorrecta)',
+                        opciones: [
+                            'Pérdida total o parcial de datos críticos',
+                            'Aumento automático de la productividad',
+                            'Impacto económico significativo',
+                            'Pérdida de confianza por parte de clientes'
+                        ],
+                        respuesta: 1
+                    },
+                    {
+                        pregunta: 'Mencione al menos tres factores que pueden causar la pérdida de información:',
+                        opciones: [
+                            'Fallos eléctricos, errores humanos y amenazas cibernéticas',
+                            'Solo fallos de hardware',
+                            'Exceso de respaldos y redundancia',
+                            'Personal demasiado capacitado'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué tipo de organizaciones dependen críticamente de la información según la lectura?',
+                        opciones: [
+                            'Instituciones educativas y sistemas de ventas',
+                            'Solo grandes corporaciones',
+                            'Solo empresas tecnológicas',
+                            'Ninguna organización moderna'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            },
+            'seccion2': {
+                nombre: 'Sección 2 - Política de Respaldo y Recuperación',
+                preguntas: [
+                    {
+                        pregunta: '¿Qué es una Política de Respaldo y Recuperación y cuál es su propósito principal?',
+                        opciones: [
+                            'Documento formal que establece directrices para protección de información',
+                            'Un manual técnico para administradores de sistemas',
+                            'Una ley gubernamental obligatoria',
+                            'Un contrato con proveedores de nube'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: 'De acuerdo con ISO/IEC 27001, ¿qué aspectos debe especificar una política de respaldo y recuperación?',
+                        opciones: [
+                            'Cómo proteger información y cómo restaurar datos',
+                            'Solo los costos de implementación',
+                            'Solo los nombres de los responsables',
+                            'Solo los tipos de hardware a comprar'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: 'Según ISO 27002, ¿cuáles son las acciones mínimas que una organización debe realizar?',
+                        opciones: [
+                            'Realizar respaldos regulares, mantener copias seguras y probar restauración',
+                            'Comprar el equipo más caro disponible',
+                            'Contratar a muchos técnicos',
+                            'Guardar copias en cualquier lugar'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            },
+            'seccion3': {
+                nombre: 'Sección 3 - Conceptos Fundamentales',
+                preguntas: [
+                    {
+                        pregunta: '¿Qué es un Respaldo (Backup)?',
+                        opciones: [
+                            'Proceso de realizar una copia de datos para protección',
+                            'Eliminación segura de datos antiguos',
+                            'Actualización de sistemas',
+                            'Monitoreo de red'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué significa RPO (Recovery Point Objective)?',
+                        opciones: [
+                            'Cantidad máxima de datos que se pueden perder',
+                            'Tiempo máximo para recuperar operaciones',
+                            'Costo máximo de recuperación',
+                            'Número máximo de respaldos'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué significa RTO (Recovery Time Objective)?',
+                        opciones: [
+                            'Tiempo máximo para volver a estar operativo',
+                            'Cantidad de datos a respaldar',
+                            'Frecuencia de respaldos',
+                            'Tamaño del almacenamiento'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué representa un RPO = 0?',
+                        opciones: [
+                            'Protección en tiempo real con pérdida casi nula de datos',
+                            'No se necesita respaldo',
+                            'Respaldo semanal es suficiente',
+                            'Sistema no crítico'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿En qué tipo de sistemas se utiliza RPO = 0?',
+                        opciones: [
+                            'Sistemas críticos como bancos y salud',
+                            'Sistemas de archivos personales',
+                            'Sistemas de prueba no productivos',
+                            'Sistemas obsoletos'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: 'Proporcione un ejemplo de RTO y su aplicación práctica:',
+                        opciones: [
+                            'RTO = 30 minutos para sistemas de atención al cliente',
+                            'RTO = 1 semana para datos históricos',
+                            'RTO = 1 día para correos personales',
+                            'RTO ilimitado para todo'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            },
+            'seccion4': {
+                nombre: 'Sección 4 - Tipos de Respaldos',
+                preguntas: [
+                    {
+                        pregunta: 'Describa las características principales del Respaldo Completo (Full Backup):',
+                        opciones: [
+                            'Copia todo el contenido, ofrece confiabilidad pero consume espacio',
+                            'Copia solo cambios, es muy pequeño',
+                            'No requiere almacenamiento',
+                            'Se ejecuta cada minuto'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿En qué se diferencian el respaldo incremental y el diferencial?',
+                        opciones: [
+                            'Incremental: cambios desde último respaldo; Diferencial: cambios desde último full',
+                            'Son exactamente iguales',
+                            'Incremental es más grande que diferencial',
+                            'Diferencial requiere cadena completa de respaldos'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué es el CDP (Continuous Data Protection)?',
+                        opciones: [
+                            'Respaldo continuo que registra cambios en tiempo real',
+                            'Respaldo mensual manual',
+                            'Respaldo solo de archivos de texto',
+                            'Respaldo sin verificación'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            },
+            'seccion5': {
+                nombre: 'Sección 5 - Medios y Ubicaciones de Respaldo',
+                preguntas: [
+                    {
+                        pregunta: '¿Por qué no se recomienda depender únicamente del respaldo local?',
+                        opciones: [
+                            'Comparte riesgos físicos con sistemas productivos',
+                            'Es demasiado caro',
+                            'Es demasiado rápido',
+                            'Requiere internet constante'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: 'Mencione una ventaja del respaldo en la nube según ISO 27018 y NIST:',
+                        opciones: [
+                            'Escalabilidad automática y alta durabilidad',
+                            'No requiere internet',
+                            'Es siempre más barato',
+                            'No necesita cifrado'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué ventaja principal ofrece el respaldo externo u off-site?',
+                        opciones: [
+                            'Protege contra eventos catastróficos locales',
+                            'Es más rápido que local',
+                            'No requiere mantenimiento',
+                            'Es gratuito'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            },
+            'seccion6': {
+                nombre: 'Sección 6 - Procedimientos ante Incidentes Críticos',
+                preguntas: [
+                    {
+                        pregunta: 'Enumere las seis etapas del procedimiento ante incidentes críticos:',
+                        opciones: [
+                            'Detección, Análisis, Comunicación, Restauración, Validación, Documentación',
+                            'Solo llamar al técnico',
+                            'Reiniciar todo inmediatamente',
+                            'Ignorar y esperar que se solucione'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: 'En la etapa de Restauración, ¿qué se debe verificar antes de restaurar los datos?',
+                        opciones: [
+                            'Integridad del respaldo para evitar reintroducir errores',
+                            'Solo el tamaño del archivo',
+                            'El color del equipo',
+                            'La hora del día'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Por qué es importante la etapa de Documentación y Mejora después de un incidente?',
+                        opciones: [
+                            'Permite registrar lecciones aprendidas y mejorar procedimientos',
+                            'Para culpar a alguien',
+                            'Para aumentar el papeleo',
+                            'Es opcional según la lectura'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            },
+            'seccion7': {
+                nombre: 'Sección 7 - Roles y Responsabilidades',
+                preguntas: [
+                    {
+                        pregunta: '¿Cuál es la responsabilidad principal del Líder o Jefe de Sistemas durante un incidente crítico?',
+                        opciones: [
+                            'Activar protocolo, asignar responsables y supervisar fases',
+                            'Hacer todo el trabajo técnico personalmente',
+                            'Esconder el incidente',
+                            'Culpar al usuario'
+                        ],
+                        respuesta: 0
+                    },
+                    {
+                        pregunta: '¿Qué rol se encarga de verificar que la restauración no contenga malware?',
+                        opciones: [
+                            'Equipo de Seguridad Informática',
+                            'El practicante nuevo',
+                            'El director general',
+                            'El proveedor de internet'
+                        ],
+                        respuesta: 0
+                    }
+                ]
+            }
+        }
+    },
     'semana14': {
         nombre: 'Semana 14 - Práctica',
         partes: {
