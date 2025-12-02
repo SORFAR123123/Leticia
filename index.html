@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación de Mazos + RPG + Eventos Diarios</title>
+    <title>Aplicación de Repaso - Semana 13 y 14</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- PANTALLA DE EVENTO DIARIO -->
+    <!-- PANTALLA DE EVENTO DIARIO (Se mantiene) -->
     <div id="pantalla-evento-diario" class="pantalla">
         <div class="contenedor">
             <div class="evento-diario-container">
@@ -112,8 +112,8 @@
     <!-- PANTALLA DE INICIO -->
     <div id="pantalla-inicio" class="pantalla activa">
         <div class="contenedor">
-            <h1>BIBLIOTECA DE MAZOS</h1>
-            <p class="subtitulo">Selecciona un contenedor principal</p>
+            <h1>📚 REPASO SEMANAL</h1>
+            <p class="subtitulo">Selecciona una semana para practicar</p>
             
             <!-- PANEL DE MISIONES DIARIAS -->
             <div class="misiones-diarias-panel">
@@ -147,58 +147,56 @@
             </div>
             
             <div class="menu-principal">
+                <!-- SEMANA 14 -->
                 <div class="seccion-menu">
-                    <h2 class="titulo-seccion">CONTENEDORES PRINCIPALES</h2>
+                    <h2 class="titulo-seccion">📅 SEMANA 14</h2>
                     <div class="contenedor-tarjetas">
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor1')">
-                            <img src="https://pbs.twimg.com/media/G5_wCzcWsAAmHcA?format=png&name=small" alt="Contenedor 1" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">The last summer 1</div>
+                        <div class="lastsummer-card" onclick="cargarSemana('semana14', 'parte1')">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop" alt="Parte 1" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Parte 1 - Alternativas</div>
+                            <div class="lastsummer-info">20 preguntas de selección</div>
                         </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor2')">
-                            <img src="https://pbs.twimg.com/media/G6EARd6XIAEYjvU?format=jpg&name=medium" alt="Contenedor 2" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Toono Esuke 2</div>
+                        <div class="lastsummer-card" onclick="cargarSemana('semana14', 'parte2')">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=400&fit=crop" alt="Parte 2" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Parte 2 - V/F</div>
+                            <div class="lastsummer-info">15 preguntas Verdadero/Falso</div>
                         </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor3')">
-                            <img src="https://pbs.twimg.com/media/G67wm2LXMAATzxp?format=jpg&name=small" alt="Contenedor 3" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Yamada</div>
+                        <div class="lastsummer-card" onclick="cargarSemana('semana14', 'parte3')">
+                            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w-400&h=400&fit=crop" alt="Parte 3" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Parte 3 - Relaciona</div>
+                            <div class="lastsummer-info">Relacionar conceptos</div>
                         </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor4')">
-                            <img src="imagenes/contenedor4.jpg" alt="Contenedor 4" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 4</div>
+                        <div class="lastsummer-card" onclick="cargarSemana('semana14', 'parte4')">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=400&fit=crop" alt="Parte 4" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Parte 4 - Respuestas Breves</div>
+                            <div class="lastsummer-info">10 preguntas de desarrollo</div>
                         </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor5')">
-                            <img src="imagenes/contenedor5.jpg" alt="Contenedor 5" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 5</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor6')">
-                            <img src="imagenes/contenedor6.jpg" alt="Contenedor 6" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 6</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor7')">
-                            <img src="imagenes/contenedor7.jpg" alt="Contenedor 7" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 7</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor8')">
-                            <img src="imagenes/contenedor8.jpg" alt="Contenedor 8" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 8</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor9')">
-                            <img src="imagenes/contenedor9.jpg" alt="Contenedor 9" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 9</div>
-                        </div>
-                        <div class="lastsummer-card" onclick="cargarContenedor('contenedor10')">
-                            <img src="imagenes/contenedor10.jpg" alt="Contenedor 10" class="lastsummer-imagen">
-                            <div class="lastsummer-texto">Contenedor 10</div>
+                        <div class="lastsummer-card" onclick="cargarSemana('semana14', 'parte5')">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop" alt="Parte 5" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Parte 5 - Casos Prácticos</div>
+                            <div class="lastsummer-info">2 casos para analizar</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SECCIÓN RPG DE NOVIA -->
+                <!-- SEMANA 13 -->
+                <div class="seccion-menu">
+                    <h2 class="titulo-seccion">📅 SEMANA 13</h2>
+                    <div class="contenedor-tarjetas">
+                        <div class="lastsummer-card" onclick="cargarSemana('semana13', 'preguntas')">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop" alt="Preguntas" class="lastsummer-imagen">
+                            <div class="lastsummer-texto">Preguntas de Investigación</div>
+                            <div class="lastsummer-info">20 preguntas de desarrollo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN RPG (se mantiene) -->
                 <div class="seccion-menu">
                     <h2 class="titulo-seccion">MODOS ESPECIALES</h2>
                     <div class="contenedor-tarjetas">
                         <div class="lastsummer-card" onclick="iniciarRPGNovia()">
-                            <img src="https://pbs.twimg.com/media/G6EB4BzbMAIovTM?format=jpg&name=4096x4096" alt="RPG de Novia" class="lastsummer-imagen">
+                            <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop" alt="RPG de Novia" class="lastsummer-imagen">
                             <div class="lastsummer-texto">💕 Mi Novia RPG</div>
                             <div class="lastsummer-info">Sistema de relación +18</div>
                         </div>
@@ -208,31 +206,15 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE SUBCONTENEDORES -->
-    <div id="pantalla-subcontenedores" class="pantalla">
-        <div class="contenedor">
-            <div class="barra-superior">
-                <div class="contador" id="titulo-contenedor">Contenedor</div>
-                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
-            </div>
-            
-            <h2 id="nombre-contenedor">Sub-Contenedores</h2>
-            
-            <div class="contenedor-subcontenedores" id="contenedor-subcontenedores">
-                <!-- Los sub-contenedores se cargarán dinámicamente -->
-            </div>
-        </div>
-    </div>
-
-    <!-- PANTALLA DE MAZOS -->
+    <!-- PANTALLA DE MAZOS (ahora para partes de cada semana) -->
     <div id="pantalla-mazos" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
-                <div class="contador" id="titulo-subcontenedor">Sub-Contenedor</div>
-                <button class="boton-home" onclick="volverASubcontenedores()">Volver Atrás</button>
+                <div class="contador" id="titulo-semana">Semana</div>
+                <button class="boton-home" onclick="volverAlInicio()">Volver al Inicio</button>
             </div>
             
-            <h2 id="nombre-subcontenedor">Mazos Disponibles</h2>
+            <h2 id="nombre-semana">Mazos Disponibles</h2>
             
             <div class="contenedor-mazos" id="contenedor-mazos">
                 <!-- Los mazos se cargarán dinámicamente -->
@@ -240,7 +222,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA DEL QUIZ -->
+    <!-- PANTALLA DEL QUIZ (se mantiene igual) -->
     <div id="pantalla-quiz" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
@@ -249,7 +231,7 @@
             </div>
             
             <div class="contenido-quiz">
-                <div class="palabra-japones" id="palabra-japones">言葉</div>
+                <div class="palabra-japones" id="palabra-japones">Pregunta</div>
                 <div class="lectura" id="lectura"></div>
                 
                 <div class="contenedor-opciones" id="contenedor-opciones">
@@ -258,13 +240,12 @@
                 
                 <div class="resultado" id="resultado"></div>
                 
-                <!-- EL BOTÓN SIGUIENTE SE MUESTRA SOLO PARA RESPUESTAS INCORRECTAS -->
                 <button class="boton-principal" id="boton-siguiente" onclick="siguientePregunta()" style="display: none;">Continuar</button>
             </div>
         </div>
     </div>
 
-    <!-- PANTALLA DE VIDEO RECOMPENSA -->
+    <!-- PANTALLA DE VIDEO RECOMPENSA (se mantiene) -->
     <div id="pantalla-video-recompensa" class="pantalla">
         <div class="contenedor">
             <div class="contenido-video">
@@ -290,7 +271,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA DE RESULTADOS -->
+    <!-- PANTALLA DE RESULTADOS (se mantiene) -->
     <div id="pantalla-resultados" class="pantalla">
         <div class="contenedor">
             <h1>Resultados del Quiz</h1>
@@ -304,7 +285,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA RPG DE NOVIA -->
+    <!-- PANTALLA RPG DE NOVIA (se mantiene igual) -->
     <div id="pantalla-rpg-novia" class="pantalla">
         <div class="contenedor">
             <div class="barra-superior">
@@ -315,7 +296,7 @@
             <div class="rpg-container">
                 <!-- PERFIL DE LA NOVIA -->
                 <div class="perfil-novia">
-                    <img src="imagenes/novia.jpg" alt="Novia" class="imagen-novia">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop" alt="Novia" class="imagen-novia">
                     <div class="info-novia">
                         <h2 id="nombre-novia">Sakura</h2>
                         <div class="estadisticas">
