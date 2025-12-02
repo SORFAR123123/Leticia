@@ -10,70 +10,14 @@ const configImagenes = {
 };
 
 // ============================================================================
-// SISTEMA DE ECONOMÍA GLOBAL
-// ============================================================================
-
-const sistemaEconomia = {
-    saldoTotal: 0,
-    
-    inicializar: function() {
-        const datosGuardados = this.cargarDatos();
-        if (datosGuardados) {
-            this.saldoTotal = datosGuardados.saldoTotal || 0;
-        }
-        this.actualizarInterfaz();
-        console.log("💰 Sistema de economía inicializado. Saldo:", this.saldoTotal);
-    },
-    
-    cargarDatos: function() {
-        try {
-            const datos = localStorage.getItem('sistemaEconomia');
-            return datos ? JSON.parse(datos) : null;
-        } catch (e) {
-            console.error("Error cargando datos de economía:", e);
-            return null;
-        }
-    },
-    
-    guardarDatos: function() {
-        try {
-            localStorage.setItem('sistemaEconomia', JSON.stringify({
-                saldoTotal: this.saldoTotal
-            }));
-            return true;
-        } catch (e) {
-            console.error("Error guardando datos de economía:", e);
-            return false;
-        }
-    },
-    
-    agregarDinero: function(cantidad, motivo = "") {
-        this.saldoTotal += cantidad;
-        this.guardarDatos();
-        this.actualizarInterfaz();
-        
-        console.log(`💰 +${cantidad} S/. ${motivo ? `(${motivo})` : ''} | Saldo total: ${this.saldoTotal} S/.`);
-        
-        return this.saldoTotal;
-    },
-    
-    actualizarInterfaz: function() {
-        const saldoElement = document.getElementById('saldo-total');
-        if (saldoElement) {
-            saldoElement.textContent = this.saldoTotal;
-        }
-    }
-};
-
-// ============================================================================
-// SISTEMA DE MISIONES DIARIAS
+// SISTEMA DE MISIONES DIARIAS (SIMPLIFICADO)
 // ============================================================================
 
 const misionesDiarias = {
     misiones: [
-        { id: 1, nombre: "Completar 1 mazo al 100%", objetivo: 1, progreso: 0, recompensa: 1, completada: false },
-        { id: 2, nombre: "Completar 3 mazos al 100%", objetivo: 3, progreso: 0, recompensa: 3, completada: false },
-        { id: 3, nombre: "Completar 5 mazos al 100%", objetivo: 5, progreso: 0, recompensa: 5, completada: false }
+        { id: 1, nombre: "Completar 1 mazo al 100%", objetivo: 1, progreso: 0, completada: false },
+        { id: 2, nombre: "Completar 3 mazos al 100%", objetivo: 3, progreso: 0, completada: false },
+        { id: 3, nombre: "Completar 5 mazos al 100%", objetivo: 5, progreso: 0, completada: false }
     ],
     
     mazosCompletadosHoy: 0,
@@ -97,9 +41,6 @@ const misionesDiarias = {
     
     obtenerFechaHoy: function() {
         const ahora = new Date();
-        if (ahora.getHours() < 3) {
-            ahora.setDate(ahora.getDate() - 1);
-        }
         return ahora.toISOString().split('T')[0];
     },
     
@@ -159,9 +100,7 @@ const misionesDiarias = {
     
     completarMision: function(mision) {
         mision.completada = true;
-        sistemaEconomia.agregarDinero(mision.recompensa, `Misión ${mision.id} completada`);
-        
-        console.log(`🎉 Misión ${mision.id} completada! Recompensa: +${mision.recompensa} S/.`);
+        console.log(`🎉 Misión ${mision.id} completada!`);
     },
     
     actualizarInterfaz: function() {
@@ -180,7 +119,7 @@ const misionesDiarias = {
 };
 
 // ============================================================================
-// ESTRUCTURA DE LAS SEMANAS
+// ESTRUCTURA DE LAS SEMANAS (SE MANTIENE IGUAL)
 // ============================================================================
 
 const estructuraSemanas = {
@@ -651,6 +590,7 @@ let mazoActual = [];
 let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
+let modoEstudio = ''; // 'orden' o 'desorden'
 
 // ============================================================================
 // FUNCIONES PRINCIPALES
@@ -673,7 +613,7 @@ function cargarSemana(semanaId, parteId) {
         
         const mazoDiv = document.createElement('div');
         mazoDiv.className = 'mazo-card';
-        mazoDiv.onclick = () => cargarMazo();
+        mazoDiv.onclick = () => mostrarPantallaModos();
         
         mazoDiv.innerHTML = `
             <img src="${configImagenes.semanas[semanaId]}" alt="${parte.nombre}" class="mazo-imagen">
@@ -687,17 +627,34 @@ function cargarSemana(semanaId, parteId) {
     }
 }
 
-function cargarMazo() {
+function mostrarPantallaModos() {
+    const semana = estructuraSemanas[semanaActual];
+    const parte = semana.partes[parteActual];
+    
+    document.getElementById('titulo-modo').textContent = 'Elegir Modo de Estudio';
+    document.getElementById('nombre-parte-modo').textContent = parte.nombre;
+    
+    cambiarPantalla('pantalla-elegir-modo');
+}
+
+function iniciarMazo(modo) {
+    modoEstudio = modo;
     const semana = estructuraSemanas[semanaActual];
     const parte = semana.partes[parteActual];
     
     if (parte && parte.preguntas) {
+        // Copiar las preguntas originales
         mazoActual = [...parte.preguntas];
         preguntaActual = 0;
         respuestasCorrectas = 0;
         respuestasIncorrectas = 0;
         
-        mezclarPreguntas();
+        // Aplicar el modo seleccionado
+        if (modo === 'desorden') {
+            mezclarPreguntas();
+        }
+        // Si es 'orden', se mantienen en el orden original
+        
         cambiarPantalla('pantalla-quiz');
         mostrarPregunta();
     }
@@ -726,9 +683,13 @@ function mostrarPregunta() {
         contenedorOpciones.innerHTML = '';
         
         const opcionesMezcladas = [...pregunta.opciones];
-        for (let i = opcionesMezcladas.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [opcionesMezcladas[i], opcionesMezcladas[j]] = [opcionesMezcladas[j], opcionesMezcladas[i]];
+        
+        // Si el modo es 'desorden', mezclar las opciones también
+        if (modoEstudio === 'desorden') {
+            for (let i = opcionesMezcladas.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [opcionesMezcladas[i], opcionesMezcladas[j]] = [opcionesMezcladas[j], opcionesMezcladas[i]];
+            }
         }
         
         opcionesMezcladas.forEach((opcion, index) => {
@@ -790,12 +751,7 @@ function mostrarResultados() {
     
     if (porcentaje === 100) {
         misionesDiarias.registrarMazoCompletado();
-        sistemaEconomia.agregarDinero(1, "Mazo completado al 100%");
         mostrarVideoRecompensa();
-    } else if (porcentaje >= 80) {
-        misionesDiarias.registrarMazoCompletado();
-        sistemaEconomia.agregarDinero(0.5, "Mazo completado al 80%");
-        mostrarPantallaResultados(porcentaje);
     } else {
         mostrarPantallaResultados(porcentaje);
     }
@@ -813,6 +769,7 @@ function mostrarPantallaResultados(porcentaje) {
         Respuestas correctas: ${respuestasCorrectas}
         Respuestas incorrectas: ${respuestasIncorrectas}
         Porcentaje de aciertos: ${porcentaje}%
+        Modo de estudio: ${modoEstudio === 'orden' ? 'Ordenado' : 'Aleatorio'}
         
         ${porcentaje >= 90 ? '🏆 ¡Excelente! Dominas el tema.' : 
           porcentaje >= 70 ? '👍 Buen trabajo, pero puedes mejorar.' : 
@@ -861,220 +818,22 @@ function volverAMazos() {
     cambiarPantalla('pantalla-mazos');
 }
 
+function volverAModos() {
+    cambiarPantalla('pantalla-elegir-modo');
+}
+
 function repetirQuiz() {
     preguntaActual = 0;
     respuestasCorrectas = 0;
     respuestasIncorrectas = 0;
-    mezclarPreguntas();
+    
+    // Volver a aplicar el modo seleccionado
+    if (modoEstudio === 'desorden') {
+        mezclarPreguntas();
+    }
+    
     cambiarPantalla('pantalla-quiz');
     mostrarPregunta();
-}
-
-// ============================================================================
-// SISTEMA RPG DE NOVIA (se mantiene igual que antes)
-// ============================================================================
-
-const rpgNovia = {
-    estado: {
-        nombreNovia: "Sakura",
-        nivelRelacion: 1,
-        experiencia: 0,
-        afinidad: 50,
-        estadoAnimo: "feliz",
-        energia: 100,
-        ultimaVisita: null,
-        conversacionesDesbloqueadas: [],
-        escenasDesbloqueadas: []
-    },
-    
-    economia: {
-        moneda: "S/.",
-        nombre: "Soles",
-        saldo: 0,
-        inventario: {
-            condones: 0,
-            flores: 0,
-            chocolates: 0,
-            joyas: 0
-        }
-    },
-    
-    contenidoAdulto: {
-        desbloqueado: false,
-        escenasDisponibles: [
-            { id: "beso", nombre: "Beso Apasionado", costoCondones: 1, afinidadRequerida: 30 },
-            { id: "caricias", nombre: "Carícias Íntimas", costoCondones: 1, afinidadRequerida: 50 },
-            { id: "intimidad1", nombre: "Primera Noche", costoCondones: 1, afinidadRequerida: 70 },
-            { id: "intimidad2", nombre: "Noche de Pasión", costoCondones: 2, afinidadRequerida: 85 }
-        ],
-        escenasCompletadas: []
-    },
-    
-    conversaciones: {
-        saludos: [
-            "¡Hola mi amor! 💕 ¿Cómo estás?",
-            "¡Qué alegría verte! 😊",
-            "Te extrañaba tanto... 🥰",
-            "¡Mi vida ha llegado! 💖"
-        ],
-        conversacionesNormales: [
-            { pregunta: "¿Qué has hecho hoy?", respuestas: ["Estudié mucho 💪", "Pensé en ti todo el día 😘", "Practiqué para mis exámenes 📚"] },
-            { pregunta: "¿Te gustaría salir?", respuestas: ["¡Claro! Donde tú quieras 💃", "Solo contigo iría a cualquier lugar 🌸", "Me encanta pasar tiempo contigo 🎮"] }
-        ]
-    }
-};
-
-function iniciarRPGNovia() {
-    cambiarPantalla('pantalla-rpg-novia');
-    actualizarInterfazRPG();
-}
-
-function actualizarInterfazRPG() {
-    document.getElementById('nombre-novia').textContent = rpgNovia.estado.nombreNovia;
-    document.getElementById('nivel-relacion').textContent = `Nivel ${rpgNovia.estado.nivelRelacion}`;
-    document.getElementById('afinidad').textContent = `${rpgNovia.estado.afinidad}%`;
-    
-    rpgNovia.economia.saldo = sistemaEconomia.saldoTotal;
-    document.getElementById('saldo-rpg').textContent = `${rpgNovia.economia.saldo} ${rpgNovia.economia.moneda}`;
-    
-    document.getElementById('condones-inventario').textContent = rpgNovia.economia.inventario.condones;
-    
-    const barraAfinidad = document.getElementById('barra-afinidad');
-    barraAfinidad.style.width = `${rpgNovia.estado.afinidad}%`;
-    
-    document.getElementById('estado-animo').textContent = obtenerEmojiEstadoAnimo(rpgNovia.estado.estadoAnimo);
-    
-    const seccionAdulto = document.getElementById('seccion-adulto');
-    seccionAdulto.style.display = rpgNovia.contenidoAdulto.desbloqueado ? 'block' : 'none';
-    
-    generarDialogoAleatorio();
-}
-
-function obtenerEmojiEstadoAnimo(estado) {
-    const emojis = {
-        feliz: "😊",
-        enamorada: "🥰",
-        excitada: "😳",
-        juguetona: "😏",
-        timida: "😊",
-        pasional: "🔥"
-    };
-    return emojis[estado] || "😊";
-}
-
-function generarDialogoAleatorio() {
-    const dialogoElement = document.getElementById('dialogo-novia');
-    const saludos = rpgNovia.conversaciones.saludos;
-    const saludoAleatorio = saludos[Math.floor(Math.random() * saludos.length)];
-    
-    dialogoElement.innerHTML = `
-        <div class="dialogo-burbuja">
-            <div class="texto-dialogo">${saludoAleatorio}</div>
-            <div class="tiempo-dialogo">Ahora</div>
-        </div>
-    `;
-}
-
-function hablarConNovia() {
-    const conversaciones = rpgNovia.estado.afinidad >= 60 ? 
-        rpgNovia.conversaciones.conversacionesNormales : 
-        rpgNovia.conversaciones.conversacionesNormales;
-    
-    const conversacion = conversaciones[Math.floor(Math.random() * conversaciones.length)];
-    const respuesta = conversacion.respuestas[Math.floor(Math.random() * conversacion.respuestas.length)];
-    
-    const dialogoElement = document.getElementById('dialogo-novia');
-    dialogoElement.innerHTML = `
-        <div class="dialogo-burbuja">
-            <div class="pregunta-dialogo">${conversacion.pregunta}</div>
-            <div class="texto-dialogo">${respuesta}</div>
-            <div class="tiempo-dialogo">Ahora</div>
-        </div>
-    `;
-    
-    aumentarAfinidad(2);
-}
-
-function aumentarAfinidad(cantidad) {
-    rpgNovia.estado.afinidad = Math.min(100, rpgNovia.estado.afinidad + cantidad);
-    actualizarInterfazRPG();
-    
-    if (rpgNovia.estado.afinidad >= 30 && !rpgNovia.contenidoAdulto.desbloqueado) {
-        rpgNovia.contenidoAdulto.desbloqueado = true;
-        mostrarMensajeRPG("¡Nueva sección desbloqueada! 💕");
-    }
-}
-
-function regalarItem(tipo) {
-    const costos = {
-        flores: 5,
-        chocolates: 10,
-        joyas: 20
-    };
-    
-    if (rpgNovia.economia.saldo >= costos[tipo]) {
-        rpgNovia.economia.saldo -= costos[tipo];
-        sistemaEconomia.agregarDinero(-costos[tipo], `Regalo de ${tipo}`);
-        rpgNovia.economia.inventario[tipo]++;
-        
-        const afinidadGanada = {
-            flores: 5,
-            chocolates: 8,
-            joyas: 15
-        };
-        
-        aumentarAfinidad(afinidadGanada[tipo]);
-        mostrarMensajeRPG(`Le regalaste ${tipo} a ${rpgNovia.estado.nombreNovia} 💝`);
-    } else {
-        mostrarMensajeRPG("No tienes suficiente dinero 💸");
-    }
-}
-
-function comprarCondones() {
-    const costo = 15;
-    if (rpgNovia.economia.saldo >= costo) {
-        rpgNovia.economia.saldo -= costo;
-        sistemaEconomia.agregarDinero(-costo, "Compra de condones");
-        rpgNovia.economia.inventario.condones++;
-        actualizarInterfazRPG();
-        mostrarMensajeRPG("¡Condones comprados! 💕");
-    } else {
-        mostrarMensajeRPG("No tienes suficiente dinero para comprar condones 💸");
-    }
-}
-
-function usarCondon(escenaId) {
-    if (rpgNovia.economia.inventario.condones <= 0) {
-        mostrarMensajeRPG("No tienes condones disponibles 💔");
-        return;
-    }
-    
-    const escena = rpgNovia.contenidoAdulto.escenasDisponibles.find(e => e.id === escenaId);
-    
-    if (!escena) {
-        mostrarMensajeRPG("Escena no encontrada");
-        return;
-    }
-    
-    if (rpgNovia.estado.afinidad < escena.afinidadRequerida) {
-        mostrarMensajeRPG(`Necesitas ${escena.afinidadRequerida}% de afinidad para esta escena 💝`);
-        return;
-    }
-    
-    rpgNovia.economia.inventario.condones -= escena.costoCondones;
-    aumentarAfinidad(10);
-    mostrarMensajeRPG(`¡Disfrutaste ${escena.nombre} con ${rpgNovia.estado.nombreNovia}! 💖`);
-    actualizarInterfazRPG();
-}
-
-function mostrarMensajeRPG(mensaje) {
-    const mensajeElement = document.getElementById('mensaje-rpg');
-    mensajeElement.textContent = mensaje;
-    mensajeElement.style.display = 'block';
-    
-    setTimeout(() => {
-        mensajeElement.style.display = 'none';
-    }, 3000);
 }
 
 // ============================================================================
@@ -1084,21 +843,30 @@ function mostrarMensajeRPG(mensaje) {
 document.addEventListener('DOMContentLoaded', function() {
     console.log("🚀 Aplicación cargada - Inicializando sistemas...");
     
-    sistemaEconomia.inicializar();
+    // Inicializar solo las misiones (sin sistema de dinero)
     misionesDiarias.inicializar();
     
     console.log("✅ Sistemas inicializados correctamente");
 });
 
 // ============================================================================
-// FUNCIONES PARA TESTING
+// FUNCIONES PARA EVENTOS DIARIOS (SIMPLIFICADAS)
 // ============================================================================
 
-window.agregarDinero = function(cantidad) {
-    sistemaEconomia.agregarDinero(cantidad, "Testing");
-};
-
-window.verEstado = function() {
-    console.log("Saldo:", sistemaEconomia.saldoTotal);
-    console.log("Misiones:", misionesDiarias.misiones);
+const eventosDiarios = {
+    aceptarEvento: function() {
+        cambiarPantalla('pantalla-video-evento');
+    },
+    
+    omitirEvento: function() {
+        cambiarPantalla('pantalla-video-fallo');
+    },
+    
+    cerrarVideoRecompensa: function() {
+        cambiarPantalla('pantalla-inicio');
+    },
+    
+    cerrarVideoFallo: function() {
+        cambiarPantalla('pantalla-inicio');
+    }
 };
